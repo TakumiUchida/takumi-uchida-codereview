@@ -10,20 +10,20 @@
 
     const tasks = ["掃除","買い物","散歩"];
 
-    function tasklist() {
+    function taskList() {
     console.log("=========================");
     console.log("現在持っているタスク一覧");
     console.log("=========================");
-    tasks.forEach(function(item, index, array) {
-        console.log(String.raw`${index}:${item}`);
+    tasks.forEach((item, index) => {
+        console.log(`${index}:${item}`);
     });
   }
 
-    tasklist();
-    const addtask = prompt("タスクを追加してください");
+    taskList();
+    const addTask = prompt("タスクを追加してください");
     alert("タスクを追加しました！");
-    tasks.push(addtask);
-    tasklist();
+    tasks.push(addTask);
+    taskList();
     prompt("「確認,追加,削除,終了」の４つのいずれかを入力してください");
 
 
