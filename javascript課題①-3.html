@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+    const tasks = ["掃除","買い物","散歩"];
+
+    function taskList() {
+    console.log("=========================");
+    console.log("現在持っているタスク一覧");
+    console.log("=========================");
+    tasks.forEach((item, index) => {
+        console.log(`${index}:${item}`);
+    });
+  }
+
+    taskList();
+    const addTask = prompt("タスクを追加してください");
+    alert("タスクを追加しました！");
+    tasks.push(addTask);
+    taskList();
+    prompt("「確認,追加,削除,終了」の４つのいずれかを入力してください");
+
+
+    </script>
+</body>
+</html>
