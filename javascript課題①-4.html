@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      const tasks = {
+        "机を片付ける":"掃除",
+        "牛乳を買う":"買い物" ,
+        "散歩する":"運動"
+      };
+
+      function taskList() {
+      console.log("=========================");
+      console.log("現在持っているタスク一覧");
+      console.log("=========================");
+      Object.keys(tasks).forEach((key,index) => {
+          console.log(`${index}:[内容]${key}､[ジャンル]${tasks[key]}`);
+      });
+    }
+      taskList();
+      const addTask = prompt("タスクを入力してください");
+      const addZyanru = prompt("ジャンルを入力してください");
+      tasks[addTask] = addZyanru;
+      alert("タスクを追加しました！");
+      taskList();
+      prompt("「確認,追加,削除,終了」の４つのいずれかを入力してください");
+
+
+
+    </script>
+</body>
+</html>
