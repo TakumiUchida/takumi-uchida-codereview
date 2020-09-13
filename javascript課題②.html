@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>javascript課題②</title>
+</head>
+<body>
+  <h1>FizzBuzz問題</h1>
+  <form action="index.html" method="get" name="inputFizzNum">
+    FizzNum:<input type="text" id="FizzNum" name="Fizz" placeholder="整数値を入力してください" value="">
+  </form>
+  <form action="index.html" method="get" name="inputBuzzNum">
+    BuzzNum:<input type="text" id="BuzzNum" name="Buzz" placeholder="整数値を入力してください" value="">
+  </form>
+<input type="button"  id="outPutFizzBuzz" value="実行">
+<div class="syuturyoku">
+    <p>【出力】</p>
+</div>
+<div id="output">
+</div>
+
+<script type="text/javascript">
+ function outPutFizzBuzz(){
+   document.getElementById('output').innerHTML = "";
+  const FizzNum = document.getElementById("FizzNum").value;
+  const BuzzNum = document.getElementById("BuzzNum").value;
+  if(FizzNum.match(	/^[+,-]?([1-9]\d*|0)$/)!= null && BuzzNum.match(	/^[+,-]?([1-9]\d*|0)$/)!= null){
+    for(let i =1; i<100; i++) {
+       if( i % FizzNum === 0 && i % BuzzNum === 0){
+         const p = document.createElement("p");
+         const text1 = document.createTextNode(`FizzBuzz ${i}`);
+         document.getElementById("output").appendChild(p).appendChild(text1);
+       }else if(i % FizzNum === 0){
+         const p = document.createElement("p");
+         const text2 = document.createTextNode(`Fizz ${i}`);
+         document.getElementById("output").appendChild(p).appendChild(text2);
+       }else if (i % BuzzNum ===0) {
+         const p = document.createElement("p");
+         const text3 = document.createTextNode(`Buzz ${i}`);
+         document.getElementById("output").appendChild(p).appendChild(text3);
+       }else{
+      }
+    }
+    }else{
+    const p = document.createElement("p");
+    const text4 = document.createTextNode(`整数値を入力してください`);
+     document.getElementById("output").appendChild(p).appendChild(text4);
+  }     
+}
+const el = document.getElementById("outPutFizzBuzz");
+el.addEventListener("click" , outPutFizzBuzz, false);
+</script>
+</body>
+</html>
