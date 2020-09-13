@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>javascript課題➂-1</title>
+</head>
+<body>
+  <h1>ToDoリスト</h1>
+  <input type="radio" checked="checked">すべて
+  <input type="radio">作業中
+  <input type="radio">完了
+    <table id="tasktable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>コメント</th>
+          <th>状態</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+      </tbody>
+    </table>
+  <form name="inputform">
+    <h1>新規タスクの追加</h1>
+    <input type="text" id="add">
+    <input type="button" value="追加" id="addbutton">
+  </form>
+</body>
+</html>
+
+<script type="text/javascript">
+  const tasks = [];
+  const el = document.getElementById("addbutton");
+  el.addEventListener("click" , function () {
+    const list = document.getElementById('list');
+    const content =  document.getElementById('add').value;
+    tasks.push(content);
+    let html ='';
+    for(let i=0; i<tasks.length; i++){
+      html += `<tr><td>${i}</td><td>${tasks[i]}</td><td><input type="button" value="作業中"><input type="button" id="delete" value="削除"></td></tr>`;
+    }
+    list.innerHTML = html;
+    document.getElementById('add').value = '';
+}, false);
+</script>
+
+<style>
+  #delete {
+    margin-left:5px;
+  }
+  input[type="button"] {
+    border-radius: 5px;
+    }
+    tr {
+      text-align: left;
+    }
+</style>
