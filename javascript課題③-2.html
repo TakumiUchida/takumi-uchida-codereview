@@ -30,18 +30,36 @@
 
 <script type="text/javascript">
   const tasks = [];
+  // 追加
   const el = document.getElementById("addbutton");
-  el.addEventListener("click" , function () {
+  el.addEventListener("click" , function addTask() {
     const list = document.getElementById('list');
     const content =  document.getElementById('add').value;
     tasks.push(content);
-    let html ='';
-    for(let i=0; i<tasks.length; i++){
-      html += `<tr><td>${i}</td><td>${tasks[i]}</td><td><input type="button" value="作業中"><input type="button" id="delete" value="削除"></td></tr>`;
-    }
-    list.innerHTML = html;
     document.getElementById('add').value = '';
+    output();
 }, false);
+
+function output() {
+let html ='';
+for(let i=0; i<tasks.length; i++){
+  html += `<tr id="${i}"><td>${i}</td><td>${tasks[i]}</td><td><input type="button" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
+}
+list.innerHTML = html;
+
+  //削除処理
+  const el2 = document.getElementsByClassName('delete');
+  for(let num=0; num<el2.length; num++) {
+  el2[num].addEventListener("click", function deleteTask() {
+    const getId = this.getAttribute('id');
+    tasks.splice(getId,1);
+  output();
+  }, false);
+  }
+}
+
+
+
 </script>
 
 <style>
