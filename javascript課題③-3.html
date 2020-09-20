@@ -41,22 +41,35 @@
 }, false);
 
 function output() {
-let html ='';
+let html=''
 for(let i=0; i<tasks.length; i++){
-  html += `<tr id="${i}"><td>${i}</td><td>${tasks[i]}</td><td><input type="button" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
+  html += `<tr id="${i}"><td>${i}</td><td>${tasks[i]}</td><td><input type="button" id="working${i}" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
 }
 list.innerHTML = html;
 
-  //削除処理
+  // 削除処理
   const el2 = document.getElementsByClassName('delete');
   for(let num=0; num<el2.length; num++) {
   el2[num].addEventListener("click", function deleteTask() {
     const getId = this.getAttribute('id');
     tasks.splice(getId,1);
-  output();
+    output();
   }, false);
   }
+
+  // 状態を変更
+  for(let num2=0; num2<tasks.length; num2++) {
+    const el3 = document.getElementById('working' + num2);
+    el3.addEventListener("click", function changeType() {
+      if(this.value == '作業中') {
+        this.value = '完了';
+      }else if(this.value == '完了') {
+        this.value = '作業中';
+      }
+    }, false);
+  }
 }
+
 
 
 
