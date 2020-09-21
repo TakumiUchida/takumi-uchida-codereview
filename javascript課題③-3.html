@@ -6,9 +6,11 @@
 </head>
 <body>
   <h1>ToDoリスト</h1>
-  <input type="radio" checked="checked">すべて
-  <input type="radio">作業中
-  <input type="radio">完了
+<form id="radiobutton">
+  <input type="radio" name="status" checked="checked">すべて
+  <input type="radio" name="status">作業中
+  <input type="radio" name="status">完了
+</form>
     <table id="tasktable">
       <thead>
         <tr>
@@ -43,7 +45,7 @@
 function output() {
 let html=''
 for(let i=0; i<tasks.length; i++){
-  html += `<tr id="${i}"><td>${i}</td><td>${tasks[i]}</td><td><input type="button" id="working${i}" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
+  html += `<tr id="nowWorking"><td>${i}</td><td>${tasks[i]}</td><td><input type="button" id="working${i}" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
 }
 list.innerHTML = html;
 
@@ -58,16 +60,26 @@ list.innerHTML = html;
   }
 
   // 状態を変更
+  const tr = document.getElementById('nowWorking');
   for(let num2=0; num2<tasks.length; num2++) {
     const el3 = document.getElementById('working' + num2);
     el3.addEventListener("click", function changeType() {
       if(this.value == '作業中') {
         this.value = '完了';
+        tr.setAttribute("id", "finished");
       }else if(this.value == '完了') {
         this.value = '作業中';
+        tr.setAttribute("id","nowWorking");
+
       }
     }, false);
   }
+
+  // ラジオボタンから取得
+  const getWorking = document.getElementById('nowWorking')
+  const getFinished = document.getElementById('finished')
+  const element = document.getElementById('radiobutton');
+
 }
 
 
