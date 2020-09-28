@@ -54,17 +54,50 @@ function escapeHTML(str) {
 }, false);
 
 function output() {
-let html=''
+document.getElementById("list").innerHTML = '';
 for(let i=0; i<tasks.length; i++){
-  html += `<tr id="nowWorking"><td>${i}</td><td>${escapeHTML(tasks[i])}</td><td><input type="button" id="working${i}" value="作業中"><input type="button" class="delete" value="削除"></td></tr>`;
+
+  // trタグを作成
+  const newTr = document.createElement("tr");
+  newTr.id = "nowWorking";
+  document.getElementById("list").appendChild(newTr);
+
+  // IDのtdタグを作成
+  const createId = document.createElement("td");
+  createId.id = "ID";
+  createId.textContent = i;
+  newTr.appendChild(createId);
+
+  // テキスト内容のtdタグを作成
+  const createText = document.createElement("td");
+  createText.id = "TEXT";
+  createText.textContent = escapeHTML(tasks[i]);
+  newTr.appendChild(createText);
+
+  // ボタンのtdタグを作成
+  const createButton = document.createElement("td");
+  createButton.id = "BUTTON";
+  // 作業中ボタン
+  const createWorkingButton = document.createElement("input");
+  createWorkingButton.type = "button";
+  createWorkingButton.id = `working${i}`;
+  createWorkingButton.setAttribute("value","作業中");
+  createButton.appendChild(createWorkingButton);
+   // 削除ボタン
+  const createDeleteButton = document.createElement("input");
+  createDeleteButton.type = "button";
+  createDeleteButton.setAttribute("class","delete");
+  createDeleteButton.setAttribute("value","削除");
+  createButton.appendChild(createDeleteButton);
+  newTr.appendChild(createButton);
 }
-list.innerHTML = html;
 
   // 削除処理
   const el2 = document.getElementsByClassName('delete');
   for(let num=0; num<el2.length; num++) {
   el2[num].addEventListener("click", function deleteTask() {
     const getId = this.getAttribute('id');
+    console.log(getId);
     tasks.splice(getId,1);
     output();
   }, false);
@@ -85,6 +118,7 @@ list.innerHTML = html;
       }
     }, false);
   }
+
 }
 
 
@@ -93,7 +127,7 @@ list.innerHTML = html;
 </script>
 
 <style>
-  #delete {
+  .delete {
     margin-left:5px;
   }
   input[type="button"] {
