@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>javascript課題➂-1</title>
+  <title>javascript課題➂-4</title>
 </head>
 <body>
   <h1>ToDoリスト</h1>
 <form id="radiobutton">
-  <input type="radio" name="status" checked="checked">すべて
-  <input type="radio" name="status">作業中
-  <input type="radio" name="status">完了
+  <input type="radio" name="status" value ="All" checked="checked" id="radio-all">すべて
+  <input type="radio" name="status" value="uncomplete" id="radio-uncomplete">作業中
+  <input type="radio" name="status" value="complete" id="radio-complete">完了
 </form>
     <table id="tasktable">
       <thead>
@@ -59,7 +59,6 @@ for(let i=0; i<tasks.length; i++){
 
   // trタグを作成
   const newTr = document.createElement("tr");
-  newTr.id = "nowWorking";
   document.getElementById("list").appendChild(newTr);
 
   // IDのtdタグを作成
@@ -77,17 +76,15 @@ for(let i=0; i<tasks.length; i++){
   // ボタンのtdタグを作成
   const createButton = document.createElement("td");
   createButton.id = "BUTTON";
-  // 作業中ボタン
-  const createWorkingButton = document.createElement("input");
-  createWorkingButton.type = "button";
+  const createWorkingButton = document.createElement("button");
+  createWorkingButton.textContent = "作業中";
+  createWorkingButton.setAttribute("class","uncomplete");
   createWorkingButton.id = `working${i}`;
-  createWorkingButton.setAttribute("value","作業中");
   createButton.appendChild(createWorkingButton);
    // 削除ボタン
-  const createDeleteButton = document.createElement("input");
-  createDeleteButton.type = "button";
+  const createDeleteButton = document.createElement("BUTTON");
+  createDeleteButton.textContent = "削除";
   createDeleteButton.setAttribute("class","delete");
-  createDeleteButton.setAttribute("value","削除");
   createButton.appendChild(createDeleteButton);
   newTr.appendChild(createButton);
 }
@@ -97,43 +94,78 @@ for(let i=0; i<tasks.length; i++){
   for(let num=0; num<el2.length; num++) {
   el2[num].addEventListener("click", function deleteTask() {
     const getId = this.getAttribute('id');
-    console.log(getId);
     tasks.splice(getId,1);
     output();
   }, false);
   }
 
   // 状態を変更
-  const tr = document.getElementById('nowWorking');
+  const tasks2 = [];
   for(let num2=0; num2<tasks.length; num2++) {
     const el3 = document.getElementById('working' + num2);
+    tasks2.push( {task:tasks[num2] ,status:el3.textContent} );
     el3.addEventListener("click", function changeType() {
-      if(this.value == '作業中') {
-        this.value = '完了';
-        tr.setAttribute("id", "finished");
-      }else if(this.value == '完了') {
-        this.value = '作業中';
-        tr.setAttribute("id","nowWorking");
-
+      if(this.textContent == '作業中') {
+        tasks2[num2].status = "完了";
+        this.textContent = '完了';
+        this.setAttribute('class','complete');
+      }else if(this.textContent == '完了') {
+        tasks2[num2].status = "作業中";
+        this.textContent = '作業中';
+        this.setAttribute('class','uncomplete');
       }
     }, false);
   }
 
+  // ラジオボタンによるタスク表示
+  const radioStatus = document.getElementsByName('status');
+  const filterTodos = radioType => {
+    const list = document.getElementById('list');
+    const radio = document.getElementsByName('status');
+    if (radio[1].checked || radio[2].checked ) {
+      Array.from(list.children)
+      .filter(task => !task.textContent.includes(radioType))
+      .forEach(task => task.classList.add('filtered'));
+      Array.from(list.children)
+      .filter(task => task.textContent.includes(radioType))
+      .forEach(task => task.classList.remove('filtered'));
+    } else if (radio[0].checked) {
+      Array.from(list.children)
+      .filter(task => !task.textContent.includes(radioType))
+      .forEach(task => task.classList.remove('filtered'));
+    }
+  }
+
+  const radioAll = document.getElementById('radio-all');
+  const radioUncomplete = document.getElementById('radio-uncomplete');
+  const radioComplete = document.getElementById('radio-complete');
+
+  radioAll.addEventListener('change' , () => {
+   selectedRadioType = 'すべて';
+    filterTodos(selectedRadioType);
+  })
+  radioUncomplete.addEventListener('change' , () => {
+    selectedRadioType = '作業中';
+    filterTodos(selectedRadioType);
+  })
+  radioComplete.addEventListener('change' , () => {
+    selectedRadioType = '完了';
+    filterTodos(selectedRadioType);
+  })
 }
-
-
-
-
 </script>
 
 <style>
+  .filtered {
+    display: none!important;
+  }
   .delete {
     margin-left:5px;
   }
-  input[type="button"] {
-    border-radius: 5px;
-    }
-    tr {
+  button {
+    width: 60px;
+  }
+  tr {
       text-align: left;
     }
 </style>
