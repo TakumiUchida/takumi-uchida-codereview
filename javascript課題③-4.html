@@ -43,34 +43,39 @@ function escapeHTML(str) {
 }
 
   const tasks = [];
+
   // 追加
+  const radio = document.getElementsByName('status');
   const el = document.getElementById("addbutton");
   el.addEventListener("click" , function addTask() {
-    const list = document.getElementById('list');
     const content =  document.getElementById('add').value;
-    tasks.push(content);
-    document.getElementById('add').value = '';
-    output();
+    if(content && content.match(/\S/g)) {
+      document.getElementById('add').value = '';
+      tasks.push(content);
+      output();
+    }else {
+      alert('タスクを入力してください！');
+    }
 }, false);
 
 function output() {
 document.getElementById("list").innerHTML = '';
-for(let i=0; i<tasks.length; i++){
-
+tasks.forEach((task, index) => {
   // trタグを作成
   const newTr = document.createElement("tr");
+  newTr.id = index
   document.getElementById("list").appendChild(newTr);
 
   // IDのtdタグを作成
   const createId = document.createElement("td");
-  createId.id = "ID";
-  createId.textContent = i;
+  createId.id = `ID`;
+  createId.textContent = index;
   newTr.appendChild(createId);
 
   // テキスト内容のtdタグを作成
   const createText = document.createElement("td");
   createText.id = "TEXT";
-  createText.textContent = escapeHTML(tasks[i]);
+  createText.textContent = escapeHTML(task);
   newTr.appendChild(createText);
 
   // ボタンのtdタグを作成
@@ -79,7 +84,7 @@ for(let i=0; i<tasks.length; i++){
   const createWorkingButton = document.createElement("button");
   createWorkingButton.textContent = "作業中";
   createWorkingButton.setAttribute("class","uncomplete");
-  createWorkingButton.id = `working${i}`;
+  createWorkingButton.id = `status${index}`;
   createButton.appendChild(createWorkingButton);
    // 削除ボタン
   const createDeleteButton = document.createElement("BUTTON");
@@ -87,7 +92,14 @@ for(let i=0; i<tasks.length; i++){
   createDeleteButton.setAttribute("class","delete");
   createButton.appendChild(createDeleteButton);
   newTr.appendChild(createButton);
-}
+
+  if (radio[2].checked) {
+    document.getElementById(`${index}`).classList.add('filtered');
+  }
+});
+
+
+
 
   // 削除処理
   const el2 = document.getElementsByClassName('delete');
@@ -100,17 +112,15 @@ for(let i=0; i<tasks.length; i++){
   }
 
   // 状態を変更
-  const tasks2 = [];
   for(let num2=0; num2<tasks.length; num2++) {
-    const el3 = document.getElementById('working' + num2);
-    tasks2.push( {task:tasks[num2] ,status:el3.textContent} );
+    const el3 = document.getElementById('status' + num2);
     el3.addEventListener("click", function changeType() {
       if(this.textContent == '作業中') {
-        tasks2[num2].status = "完了";
+        // tasks2[num2].status = "完了";
         this.textContent = '完了';
         this.setAttribute('class','complete');
       }else if(this.textContent == '完了') {
-        tasks2[num2].status = "作業中";
+        // tasks2[num2].status = "作業中";
         this.textContent = '作業中';
         this.setAttribute('class','uncomplete');
       }
@@ -119,9 +129,8 @@ for(let i=0; i<tasks.length; i++){
 
   // ラジオボタンによるタスク表示
   const radioStatus = document.getElementsByName('status');
+  const list = document.getElementById('list');
   const filterTodos = radioType => {
-    const list = document.getElementById('list');
-    const radio = document.getElementsByName('status');
     if (radio[1].checked || radio[2].checked ) {
       Array.from(list.children)
       .filter(task => !task.textContent.includes(radioType))
