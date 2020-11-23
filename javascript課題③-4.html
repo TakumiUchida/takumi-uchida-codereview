@@ -101,11 +101,11 @@
 
     // 削除処理
     const deleteTask = (el) => {
-        const getTr = el.target.closest('tr').getAttribute('id');
-        console.log(getTr);
-        tasks.splice(getTr,1);
-        displayTodos();
-      }
+      const getTr = el.target.closest('tr').getAttribute('id');
+      console.log(getTr);
+      tasks.splice(getTr,1);
+      displayTodos();
+    }
       const getDelete = document.getElementsByClassName('delete');
 
     for (let num = 0; num < getDelete.length; num++) {
