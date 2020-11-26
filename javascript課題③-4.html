@@ -8,7 +8,7 @@
   <h1>ToDoリスト</h1>
 <form id="radiobutton">
   <input type="radio" name="status" value ="All" checked="checked" id="radio-all">すべて
-  <input type="radio" name="status" value="uncomplete" id="radio-uncomplete">作業中
+  <input type="radio" name="status" value="incomplete" id="radio-incomplete">作業中
   <input type="radio" name="status" value="complete" id="radio-complete">完了
 </form>
     <table id="tasktable">
@@ -50,16 +50,16 @@
     if (content === '') {
     } else {
       document.getElementById('add').value = '';
-      tasks.push({task:content, status:'作業中', class:'uncomplete'});
+      tasks.push({task:content, status:'作業中', class:'incomplete'});
       console.log(tasks);
       displayTodos();
       //　ラジオボタンの値によって表示タスクを隠す
-      const uncomplete = document.getElementsByClassName('uncomplete');
+      const incomplete = document.getElementsByClassName('incomplete');
       const complete = document.getElementsByClassName('complete');
       if (radio[2].checked) {
-        console.log(uncomplete);
-        for (let numForUnComplete = 0; numForUnComplete <= uncomplete.length-1; numForUnComplete++) {
-          uncomplete[numForUnComplete].closest('tr').classList.add('filtered');
+        console.log(incomplete);
+        for (let numForincomplete = 0; numForincomplete <= incomplete.length-1; numForincomplete++) {
+          incomplete[numForincomplete].closest('tr').classList.add('filtered');
         }
       } else if (radio[2].checked) {
         for (let numForComplete = 0; numForComplete <= complete.length-1; numForComplete++) {
@@ -132,8 +132,8 @@
         tasks[getTrForChangeStatus].status = '完了';
       } else if (el.target.textContent == '完了') {
         el.target.textContent = '作業中';
-        el.target.setAttribute("class",'uncomplete');
-        tasks[getTrForChangeStatus].class = 'uncomplete';
+        el.target.setAttribute("class",'incomplete');
+        tasks[getTrForChangeStatus].class = 'incomplete';
         tasks[getTrForChangeStatus].status = '作業中';
       }
     }
@@ -161,13 +161,13 @@
       }
     }
     const radioAll = document.getElementById('radio-all');
-    const radioUncomplete = document.getElementById('radio-uncomplete');
+    const radioincomplete = document.getElementById('radio-incomplete');
     const radioComplete = document.getElementById('radio-complete');
     radioAll.addEventListener("change" , () => {
       selectedRadioType = 'すべて';
       filterTodos(selectedRadioType);
     })
-    radioUncomplete.addEventListener("change" , () => {
+    radioincomplete.addEventListener("change" , () => {
       selectedRadioType = '作業中';
       filterTodos(selectedRadioType);
     })
